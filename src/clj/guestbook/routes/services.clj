@@ -109,7 +109,7 @@
       :post {:parameters {:multipart (s/map-of keyword? multipart/temp-file-part)}
              :handler
              (fn [{{mp :multipart} :parameters
-                   {:keys [identity]} :as session}]
+                   {:keys [identity]} :session}]
                (response/ok
                 (reduce-kv
                  (fn [acc name {:keys [size content-type] :as file-part}]
