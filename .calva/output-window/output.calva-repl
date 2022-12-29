@@ -4,13 +4,8 @@
 ; Please see https://calva.io/output/ for more info.
 ; Happy coding! ♥️
 
-; Connecting ...
-; Hooking up nREPL sessions...
-; Connecting ...
-; Hooking up nREPL sessions...
-; Interrupting Jack-in process.
 ; Jacking in...
-; Starting Jack-in Terminal: cmd.exe /d /c lein update-in :dependencies conj [nrepl,"0.9.0"] -- update-in :plugins conj [cider/cider-nrepl,"0.28.5"] -- update-in [:repl-options,:nrepl-middleware] conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
 ; Hooking up nREPL sessions...
 ; Connected session: clj
 ; TIPS:
@@ -23,42 +18,465 @@
 clj꞉user꞉>  ; Use `alt+enter` to evaluate
 ; Jack-in done.
 clj꞉user꞉> 
-; Evaluating file: home.clj
-#'guestbook.routes.home/home-routes
-clj꞉guestbook.routes.home꞉> 
-(validate-message [])
-; Execution error (ClassCastException) at struct.core/dissoc-in (core.cljc:28).
-; clojure.lang.PersistentVector cannot be cast to clojure.lang.IPersistentMap
-clj꞉guestbook.routes.home꞉> 
-(validate-message [:name "hi" :message "no"])
-; Execution error (ClassCastException) at struct.core/dissoc-in (core.cljc:28).
-; clojure.lang.PersistentVector cannot be cast to clojure.lang.IPersistentMap
-clj꞉guestbook.routes.home꞉> 
-(validate-message {:name "joe" :message "hi"})
-{:message "Gmessage must contain at least 10 characters"}
-clj꞉guestbook.routes.home꞉> 
-(validate-message {:name "joe" :message "hi there wassup"})
+(create migration "alter-posts-add-author-column")
+; Syntax error compiling at (.calva/output-window/output.calva-repl:21:1).
+; Unable to resolve symbol: create in this context
+clj꞉user꞉> 
+(in-ns 'user)
+#namespace[user]
+clj꞉user꞉> 
+(create-migration "alter-posts-add-author-column")
+; Execution error (IllegalArgumentException) at user/create-migration (user.clj:61).
+; find not supported on type: mount.core.DerefableState
+clj꞉user꞉> 
+(start)
+{:started
+ ["#'guestbook.config/env"
+  "#'guestbook.db.core/*db*"
+  "#'guestbook.routes.websockets/socket"
+  "#'guestbook.routes.websockets/channel-router"
+  "#'guestbook.handler/init-app"
+  "#'guestbook.handler/app-routes"
+  "#'guestbook.core/http-server"]}
+clj꞉user꞉> 
+(create-migration "alter-posts-add-author-column")
 nil
-clj꞉guestbook.routes.home꞉> 
-#'guestbook.routes.home/dummy
-clj꞉guestbook.routes.home꞉> 
-yo
-nil
-clj꞉guestbook.routes.home꞉> 
-errors found
-nil
-clj꞉guestbook.routes.home꞉> 
-#'guestbook.routes.home/dummy
-clj꞉guestbook.routes.home꞉> 
-no errors found
-nil
-clj꞉guestbook.routes.home꞉> 
-no errors found
-nil
-clj꞉guestbook.routes.home꞉> 
-#'guestbook.routes.home/dummy
-clj꞉guestbook.routes.home꞉> 
-{:name this field is mandatory}
-nil
-clj꞉guestbook.routes.home꞉> 
+clj꞉user꞉> 
+(migrate)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:45:1).
+; Unable to resolve symbol: migrate in this context
+clj꞉user꞉> 
+(migrate)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:49:1).
+; Unable to resolve symbol: migrate in this context
+clj꞉user꞉> 
+(restart)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:53:1).
+; Unable to resolve symbol: restart in this context
+clj꞉user꞉> 
+
 ; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+(start)
+
+{:started
+ ["#'guestbook.config/env"
+  "#'guestbook.db.core/*db*"
+  "#'guestbook.routes.websockets/socket"
+  "#'guestbook.routes.websockets/channel-router"
+  "#'guestbook.handler/init-app"
+  "#'guestbook.handler/app-routes"
+  "#'guestbook.core/http-server"]}
+{:started []}
+clj꞉user꞉> 
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+(migrate)
+nil
+clj꞉user꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> (start)
+{:started
+ ["#'guestbook.config/env"
+  "#'guestbook.db.core/*db*"
+  "#'guestbook.routes.websockets/socket"
+  "#'guestbook.routes.websockets/channel-router"
+  "#'guestbook.handler/init-app"
+  "#'guestbook.handler/routes"
+  "#'guestbook.core/http-server"]}
+clj꞉user꞉> 
+(stop)
+{:stopped
+ ["#'guestbook.core/http-server"
+  "#'guestbook.handler/init-app"
+  "#'guestbook.routes.websockets/channel-router"
+  "#'guestbook.db.core/*db*"]}
+clj꞉user꞉> 
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; nREPL Connection was closed
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Connecting ...
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+; Connecting ...
+; Bad url: 43585
+; Connecting ...
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+(start)
+{:started ["#'guestbook.config/env" "#'guestbook.db.core/*db*" "#'guestbook.routes.websockets/socket" "#'guestbook.routes.websockets/channel-router" "#'guestbook.handler/init-app" "#'guestbook.handler/routes" "#'guestbook.core/http-server"]}
+clj꞉user꞉> 
+(start)
+{:started []}
+clj꞉user꞉> 
+(stop)
+
+{:stopped ["#'guestbook.core/http-server" "#'guestbook.handler/init-app" "#'guestbook.routes.websockets/channel-router" "#'guestbook.db.core/*db*"]}
+clj꞉user꞉> 
+{:stopped []}
+clj꞉user꞉> 
+(start)
+{:started ["#'guestbook.config/env" "#'guestbook.db.core/*db*" "#'guestbook.routes.websockets/socket" "#'guestbook.routes.websockets/channel-router" "#'guestbook.handler/init-app" "#'guestbook.handler/routes" "#'guestbook.core/http-server"]}
+clj꞉user꞉> 
+(stop)
+{:stopped ["#'guestbook.core/http-server" "#'guestbook.handler/init-app" "#'guestbook.routes.websockets/channel-router" "#'guestbook.db.core/*db*"]}
+clj꞉user꞉> 
+; nREPL Connection was closed
+; Connecting ...
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+(start)
+{:started ["#'guestbook.config/env" "#'guestbook.db.core/*db*" "#'guestbook.routes.websockets/socket" "#'guestbook.routes.websockets/channel-router" "#'guestbook.handler/init-app" "#'guestbook.handler/routes" "#'guestbook.core/http-server"]}
+clj꞉user꞉> 
+(stop)
+{:stopped ["#'guestbook.core/http-server" "#'guestbook.handler/init-app" "#'guestbook.routes.websockets/channel-router" "#'guestbook.db.core/*db*"]}
+clj꞉user꞉> 
+; nREPL Connection was closed
+; Connecting ...
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉>  ; Use `alt+enter` to evaluate
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+(start){:started
+ ["#'guestbook.config/env"
+  "#'guestbook.db.core/*db*"
+  "#'guestbook.routes.websockets/socket"
+  "#'guestbook.routes.websockets/channel-router"
+  "#'guestbook.handler/init-app"
+  "#'guestbook.handler/routes"
+  "#'guestbook.core/http-server"]}
+clj꞉user꞉> 
+(create-migration "create-media-table")nil
+clj꞉user꞉> 
+(migrate)
+nil
+clj꞉user꞉> 
+(in-ns 'guestbook.db.core)
+#namespace[guestbook.db.core]
+clj꞉guestbook.db.core꞉> 
+(require ['clojure.java.io :as io])
+; Syntax error compiling at (.calva/output-window/output.calva-repl:239:1).
+; Unable to resolve symbol: io in this context
+clj꞉guestbook.db.core꞉> 
+(require '[clojure.java.io :as io])
+nil
+clj꞉guestbook.db.core꞉> 
+(conman/bind-connection *db* "sql/queries.sql")
+{:snips {},
+ :fns
+ {:save-message!
+  {:meta
+   {:doc "creates a new message using the name and message keys",
+    :command :!,
+    :result :n,
+    :file "sql/queries.sql",
+    :line 1,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :get-user-for-auth*
+  {:meta
+   {:doc "select a user for authentication",
+    :command :?,
+    :result :1,
+    :file "sql/queries.sql",
+    :line 17,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :set-profile-for-user*
+  {:meta
+   {:doc "sets a profile map for the specified user",
+    :command :<!,
+    :result :1,
+    :file "sql/queries.sql",
+    :line 27,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :save-file!
+  {:meta
+   {:doc "",
+    :command :!,
+    :result :n,
+    :file "sql/queries.sql",
+    :line 39,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :get-messages
+  {:meta
+   {:doc "selects all available messages",
+    :command :?,
+    :result :*,
+    :file "sql/queries.sql",
+    :line 8,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :get-file
+  {:meta
+   {:doc "",
+    :command :?,
+    :result :1,
+    :file "sql/queries.sql",
+    :line 49,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :get-messages-by-author
+  {:meta
+   {:doc "selects all messages posted by a user",
+    :command :?,
+    :result :*,
+    :file "sql/queries.sql",
+    :line 22,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :get-user*
+  {:meta
+   {:doc "gets a user's publicly available information",
+    :command :?,
+    :result :1,
+    :file "sql/queries.sql",
+    :line 34,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]},
+  :create-user!*
+  {:meta
+   {:doc "",
+    :command :!,
+    :result :n,
+    :file "sql/queries.sql",
+    :line 12,
+    :arglists ([db] [db params] [db params options & command-options])},
+   :fn #function[conman.core/try-query/fn--21471/fn--21472]}}}
+clj꞉guestbook.db.core꞉> 
+(with-open [in (io/input-stream
+                (io/resource
+                 "public/img/warning_clojure.png"))
+            out (java.io.ByteArrayOutputStream.)]
+  (io/copy in out)
+  (.toByteArray out))
+[-119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, -91, 0, 0, 1, 0, 8, 2, 0, 0, 0, 93, -17, 33,
+ 100, 0, 0, 0, 9, 112, 72, 89, 115, 0, 0, 11, 19, 0, 0, 11, 19, 1, ...]
+clj꞉guestbook.db.core꞉> 
+(save-file! {:name "test.png"
+             :data *1
+             :owner "testuser"
+             :type "image/png"})
+1
+clj꞉guestbook.db.core꞉> 
+(save-file! {:name "test.png"
+             :data *2
+:owner "foo"
+             :type "image/png"})
+0
+clj꞉guestbook.db.core꞉> 
+(get-file {:name "test.png"})
+{:name "test.png",
+ :owner "testuser",
+ :type "image/png",
+ :data
+ [-119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, -91, 0, 0, 1, 0, 8, 2, 0, 0, 0, 93, -17, 33,
+  100, 0, 0, 0, 9, 112, 72, 89, 115, 0, 0, 11, 19, 0, 0, 11, 19, 1, ...]}
+clj꞉guestbook.db.core꞉> 
+{:path {:name #function[clojure.core/string?--5410]}}
+clj꞉guestbook.routes.services꞉> 
+#'user/keys-named
+clj꞉user꞉> 
+#'user/keys-named
+clj꞉user꞉> 
+; Syntax error compiling at (Untitled-2:5:1).
+; Unable to resolve symbol: about-me in this context
+clj꞉user꞉> 
+#'user/about-me
+clj꞉user꞉> 
+{:github/id "bmadhusu",
+ :github/location "NY, NY",
+ :name/last "Madhusudan",
+ :name/first "B.",
+ :twitter/id "bmadhusu",
+ :twitter/joined #inst "2009-06-01T00:00:00.000-00:00"}
+clj꞉user꞉> 
+(:github/id :twitter/id)
+clj꞉user꞉> 
+{:github/id "bmadhusu",
+ :github/location "NY, NY",
+ :name/last "Madhusudan",
+ :name/first "B.",
+ :twitter/id "bmadhusu",
+ :twitter/joined #inst "2009-06-01T00:00:00.000-00:00"}
+clj꞉user꞉> 
+; Execution error (ClassCastException) at user/eval57892 (form-init10937186810492891698.clj:17).
+; class clojure.lang.APersistentMap$KeySeq cannot be cast to class clojure.lang.Named (clojure.lang.APersistentMap$KeySeq and clojure.lang.Named are in unnamed module of loader 'app')
+clj꞉user꞉> 
+; Execution error (ClassCastException) at user/eval57894 (form-init10937186810492891698.clj:17).
+; class clojure.lang.APersistentMap$KeySeq cannot be cast to class clojure.lang.Named (clojure.lang.APersistentMap$KeySeq and clojure.lang.Named are in unnamed module of loader 'app')
+clj꞉user꞉> 
+{:github/id "bmadhusu",
+ :github/location "NY, NY",
+ :name/last "Madhusudan",
+ :name/first "B.",
+ :twitter/id "bmadhusu",
+ :twitter/joined #inst "2009-06-01T00:00:00.000-00:00"}
+clj꞉user꞉> 
+(:github/id :twitter/id)
+clj꞉user꞉> 
+(:github/id :github/location :name/last :name/first :twitter/id :twitter/joined)
+clj꞉user꞉> 
+; Execution error (ClassCastException) at user/eval57900 (form-init10937186810492891698.clj:17).
+; class clojure.lang.APersistentMap$KeySeq cannot be cast to class clojure.lang.Named (clojure.lang.APersistentMap$KeySeq and clojure.lang.Named are in unnamed module of loader 'app')
+clj꞉user꞉> 
+"id"
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+#object[javax.swing.JFrame 0x34a664a5 "javax.swing.JFrame[frame0,0,0,400x600,layout=java.awt.BorderLayout,title=Clojure Inspector,resizable,normal,defaultCloseOperation=HIDE_ON_CLOSE,rootPane=javax.swing.JRootPane[,5,25,390x570,invalid,layout=javax.swing.JRootPane$RootLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=16777673,maximumSize=,minimumSize=,preferredSize=],rootPaneCheckingEnabled=true]"]
+clj꞉user꞉> 
+; Syntax error compiling at (Untitled-2:22:1).
+; Unable to resolve symbol: source in this context
+clj꞉user꞉> 
+; Syntax error compiling at (Untitled-2:22:1).
+; Unable to resolve symbol: source in this context
+clj꞉user꞉> 
+; Syntax error compiling at (Untitled-2:22:1).
+; Unable to resolve symbol: doc in this context
+clj꞉user꞉> 
+; Execution error (ClassCastException) at user/eval57913 (form-init10937186810492891698.clj:22).
+; class clojure.inspector$inspect_table cannot be cast to class clojure.lang.Symbol (clojure.inspector$inspect_table and clojure.lang.Symbol are in unnamed module of loader 'app')
+clj꞉user꞉> 
+; Syntax error compiling at (Untitled-2:22:1).
+; Unable to resolve symbol: ins in this context
+clj꞉user꞉> 
+; Syntax error compiling at (Untitled-2:23:1).
+; Unable to resolve symbol: doc in this context
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+-------------------------
+clojure.inspector/inspect-table
+([data])
+  creates a graphical (Swing) inspector on the supplied regular
+  data, which must be a sequential data structure of data structures
+  of equal length
+nil
+clj꞉user꞉> 
+; Syntax error compiling at (Untitled-2:23:1).
+; Unable to resolve symbol: ins in this context
+clj꞉user꞉> 
+(defn inspect-table 
+  "creates a graphical (Swing) inspector on the supplied regular
+  data, which must be a sequential data structure of data structures
+  of equal length"
+  {:added "1.0"}
+    [data]
+  (doto (JFrame. "Clojure Inspector")
+    (.add (JScrollPane. (JTable. (old-table-model data))))
+    (.setSize 400 600)
+    (.setVisible true)))
+nil
+clj꞉user꞉> 
+atom?
+collection-tag
+get-child
+get-child-count
+inspect
+inspect-table
+inspect-tree
+is-leaf
+list-model
+list-provider
+old-table-model
+table-model
+tree-model
+nil
+clj꞉user꞉> 
+#object[javax.swing.JFrame 0x33098218 "javax.swing.JFrame[frame1,0,0,400x400,invalid,layout=java.awt.BorderLayout,title=Clojure Inspector,resizable,normal,defaultCloseOperation=HIDE_ON_CLOSE,rootPane=javax.swing.JRootPane[,5,25,390x370,invalid,layout=javax.swing.JRootPane$RootLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=16777673,maximumSize=,minimumSize=,preferredSize=],rootPaneCheckingEnabled=true]"]
+clj꞉user꞉> 
+; Syntax error compiling at (src/clj/guestbook/media.clj:1:7988).
+; Unable to resolve symbol: ByteArrayOutputStream in this context
+clj꞉guestbook.media꞉> 
+; Syntax error compiling at (src/clj/guestbook/media.clj:1:7988).
+; Unable to resolve symbol: ByteArrayOutputStream in this context
+clj꞉guestbook.media꞉> 
+javax.imageio.ImageIO
+clj꞉guestbook.media꞉> 

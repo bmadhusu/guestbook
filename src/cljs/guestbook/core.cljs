@@ -1,67 +1,143 @@
+;---
+; Excerpted from "Web Development with Clojure, Third Edition",
+; published by The Pragmatic Bookshelf.
+; Copyrights apply to this code. It may not be used to create training material,
+; courses, books, articles, and the like. Contact us if you are in doubt.
+; We make no guarantees that this code is fit for any purpose.
+; Visit http://www.pragmaticprogrammer.com/titles/dswdcloj3 for more book information.
+;---
+;
 (ns guestbook.core
-  (:require [reagent.core :as r]
-            [reagent.dom :as dom]
-            [ajax.core :refer [GET POST]]
-            [clojure.string :as string]
-            [guestbook.validation :refer [validate-message]]))
+  (:require
+   [reagent.core :as r]
+   [reagent.dom :as dom]
+   [re-frame.core :as rf]
+   [reitit.coercion.spec :as reitit-spec]
+   [reitit.frontend :as rtf]
+   [reitit.frontend.easy :as rtfe]
+   [reitit.frontend.controllers :as rtfc]
+   [clojure.string :as string]
+   [guestbook.routes.app :refer [app-routes]]
+   [guestbook.websockets :as ws]
+   [guestbook.auth :as auth]
+   [guestbook.messages :as messages]
+   [guestbook.ajax :as ajax]
+   [mount.core :as mount]))
 
-(defn send-message! [fields errors]
-  (if-let [validation-errors (validate-message @fields)]
-    (reset! errors validation-errors)
-    (POST "/message"
-      {:format :json
-       :headers
-       {"Accept" "application/transit+json"
-        "x-csrf-token" (.-value (.getElementById js/document "token"))}
-       :params @fields
-       :handler (fn [r]
-                  (.log js/console (str "response: " r))
-                  (reset! errors nil))
-       :error-handler (fn [e]
-                        (.log js/console (str e))
-                        (reset! errors (-> e :response :errors)))})))
+;
+(rf/reg-event-fx
+ :app/initialize
+ (fn [_ _]
+   {:db {:session/loading? true}
+    :dispatch [:session/load]}))
+;;..
 
-(defn errors-component [errors id]
-  (when-let [error (id @errors)]
-    [:div.notification.is-danger (string/join error)]))
+(def router
+  (rtf/router
+   (app-routes)
+   {:data {:coercion reitit-spec/coercion}}))
+
+(rf/reg-event-db
+ :router/navigated
+ (fn [db [_ new-match]]
+   (assoc db :router/current-route new-match)))
+
+(rf/reg-sub
+ :router/current-route
+ (fn [db]
+   (:router/current-route db)))
+
+(defn init-routes! []
+  (rtfe/start!
+   router
+   (fn [new-match]
+     (when new-match
+       (let [{controllers :controllers}
+             @(rf/subscribe [:router/current-route])
+             new-match-with-controllers
+             (assoc new-match
+                    :controllers
+                    (rtfc/apply-controllers controllers new-match))] 
+         (rf/dispatch [:router/navigated new-match-with-controllers]))))
+   {:use-fragment false}))
 
 
-(defn message-form []
-  (let [fields (r/atom {})
-        errors (r/atom nil)]
+(defn navbar []
+  (let [burger-active (r/atom false)]
     (fn []
-      [:div
-       [:p "Name: " (:name @fields)]
-       [:p "Message: " (:message @fields)]
-       [errors-component errors :server-error]
-       [:div.field
-        [:label.label {:for :name} "Name"]
-        [errors-component errors :name]
-        [:input.input
-         {:type :text
-          :name :name
-          :on-change #(swap! fields
-                             assoc :name (-> % .-target .-value))
-          :value (:name @fields)}]]
-       [:div.field
-        [:label.label {:for :message} "Message"]
-        [errors-component errors :message]
-        [:textarea.textarea
-         {:name :message
-          :value (:message @fields)
-          :on-change #(swap! fields
-                             assoc :message (-> % .-target .-value))}]]
-       [:input.button.is-primary
-        {:type :submit 
-         :on-click #(send-message! fields errors)
-         :value "comment"}]])))
+      [:nav.navbar.is-info
+       [:div.container
+        [:div.navbar-brand
+         [:a.navbar-item
+          {:href "/"
+           :style {:font-weight "bold"}}
+          "guestbook"]
+         [:span.navbar-burger.burger
+          {:data-target "nav-menu"
+           :on-click #(swap! burger-active not)
+           :class (when @burger-active "is-active")}
+          [:span]
+          [:span]
+          [:span]]]
+        [:div#nav-menu.navbar-menu
+         {:class (when @burger-active "is-active")}
+         [:div.navbar-start
+          [:a.navbar-item
+           {:href "/"}
+           "Home"]
+          (when (= @(rf/subscribe [:auth/user-state]) :authenticated)
+            [:a.navbar-item
+             {:href (rtfe/href :guestbook.routes.app/author
+                               {:user (:login @(rf/subscribe [:auth/user]))})}
+             "My Posts"])]
+         [:div.navbar-end
+          [:div.navbar-item
+           (case @(rf/subscribe [:auth/user-state])
+             :loading
+             [:div {:style {:width "5em"}}
+              [:progress.progress.is-dark.is-small {:max 100} "30%"]]
 
-(defn home []
-  [:div.content>div.columns.is-centered>div.column.is-two-thirds
-   [:div.columns>div.column
-    [message-form]]])
+             :authenticated
+             [:div.buttons
+              [auth/nameplate @(rf/subscribe [:auth/user])]
+              [auth/logout-button]]
 
-(dom/render
- [home]
- (.getElementById js/document "content"))
+             :anonymous
+             [:div.buttons
+              [auth/login-button]
+              [auth/register-button]])]]]]])))
+;
+(defn page [{{:keys [view name]} :data
+             path                :path
+             :as                 match}]
+  [:section.section>div.container
+   (if view
+     [view match]
+     [:div "No view specified for route: " name " (" path ")"])])
 
+;
+(defn app []
+  (let [current-route @(rf/subscribe [:router/current-route])]
+    (.log js/console (str "current-route is " (:data current-route)))
+    [:div.app
+     [navbar]
+     [page current-route]]))
+;
+;
+(defn ^:dev/after-load mount-components []
+  (rf/clear-subscription-cache!)
+  (.log js/console "Mounting Components...")
+  (init-routes!)
+  (dom/render [#'app] (.getElementById js/document "content"))
+  (.log js/console "Components Mounted!"))
+;
+;
+
+;
+;;...
+(defn init! []
+  (.log js/console "Initializing App...")
+  (mount/start)
+  (rf/dispatch-sync [:app/initialize])
+  (mount-components))
+;

@@ -11,6 +11,11 @@ test-config.edn
 profiles.clj
 /.env
 .nrepl-port
+/.clj-kondo
+/.lsp
+/.calva
+/.shadow-cljs
+/.vscode
 
 /node_modules
 /log
