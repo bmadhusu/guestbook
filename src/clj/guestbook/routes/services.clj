@@ -154,7 +154,7 @@
                        (log/error "Unsupported file type" content-type "for file" name)
                        (update acc :failed-uploads (fnil conj []) name))))
                  {:files-uploaded []}
-                 mp)))}}]
+                 mp)))}}]]
 
     ["/session"
      {::auth/roles (auth/roles :session/get)
@@ -315,5 +315,5 @@
                  (response/bad-request {:errors errors})
           ;;else
                  (response/internal-server-error
-                  {:errors {:server-error ["Failed to save message!"]}}))))))}}]]])
+                  {:errors {:server-error ["Failed to save message!"]}}))))))}}]])
 ;
